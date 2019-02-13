@@ -1,4 +1,4 @@
-# amizone_faculty_feedback
+# amizone-faculty-feedback
 This is a python script that allows amity students o fill faculty feedback automatically
 By: Akshansh Kumar, AIIT
 
