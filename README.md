@@ -16,6 +16,8 @@ Steps:
 
 Thankyou
 
+Youtube link:https://www.youtube.com/watch?v=nhyOjBGDlO8
+
 NOTE: YOU WILL NEED PYNPUT LIBRARY TO GET THIS SCRIPT WORKING
 
 To install Pynput run this command in cmd: pip install pynput
