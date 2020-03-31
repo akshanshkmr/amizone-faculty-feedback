@@ -8,7 +8,7 @@ print("Amizone feedback tool (2020), By: Akshansh Kumar,AIIT")
 uid         = input("Enter your amizone id:")
 passw       = input("Enter your password:")
 comments    = input("Enter your comments:")
-rating      = input("Enter your rating(1=Strongly agree...5=Strongly disagree):")#  1=Strongly Agree, 2=Agree, 3=Neutral, 4=Disagree,5=Strongly Disagree
+rating      = int(input("Enter your rating(1=Strongly agree...5=Strongly disagree):"))#  1=Strongly Agree, 2=Agree, 3=Neutral, 4=Disagree,5=Strongly Disagree
 
 def resource_path(relative_path):
     try:
