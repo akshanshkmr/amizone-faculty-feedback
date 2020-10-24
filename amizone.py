@@ -1,14 +1,14 @@
-from pynput.mouse import Button, Controller
 import time
 from selenium import webdriver
 import os
-import sys
+import sys, traceback
 
-print("Amizone feedback tool (2020), By: Akshansh Kumar,AIIT")
+print("Amizone feedback tool (2020), By: Akshansh Kumar, AIIT")
 uid         = input("Enter your amizone id:")
 passw       = input("Enter your password:")
 comments    = input("Enter your comments:")
-rating      = int(input("Enter your rating(1=Strongly agree...5=Strongly disagree):"))#  1=Strongly Agree, 2=Agree, 3=Neutral, 4=Disagree,5=Strongly Disagree
+rating      = int(input("Enter your rating(1=Strongly agree...5=Strongly disagree):"))
+#  1=Strongly Agree, 2=Agree, 3=Neutral, 4=Disagree,5=Strongly Disagree
 
 def resource_path(relative_path):
     try:
@@ -17,20 +17,53 @@ def resource_path(relative_path):
         base_path = os.path.dirname(__file__)
     return os.path.join(base_path, relative_path)
 
-driver = webdriver.Chrome(resource_path('./driver/chromedriver.exe'))
+# open browser and go to amizone
+try:
+    driver = webdriver.Edge(resource_path('./driver/msedgedriver.exe'))
+except Exception as e:
+    print('\033[91m'+'Browser/Webdriver Mismatch Found!'+'\033[0m')
+    print('\033[93m'+str(e).strip()+'\033[0m')
+    print('\033[96m'+'Please ensure you are running an updated version of Microsoft Edge (Chromium)'+'\033[0m')
+    print('Download here: '+'\033[92m'+'https://www.microsoft.com/en-us/edge'+'\033[0m')
+    print('\033[96m'+'Also ensure that you have the correct version of webdriver that matches your browser version'+'\033[0m')
+    print('Download here: '+'\033[92m'+'https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/'+'\033[0m')
+    print('\033[93m'+'Then, Replace the "msedgedriver.exe" file present in: '+'\033[92m'+os.path.dirname(__file__)+'/driver/'+'\033[0m')
+    sys.exit()
 driver.maximize_window()
 driver.get("https://www.amizone.net")
+
+# login to amizone
 driver.find_element_by_name('_UserName').send_keys(uid)
 driver.find_element_by_name('_Password').send_keys(passw)
 driver.find_element_by_class_name('login100-form-btn').click()
+
+# verify login
 time.sleep(2)
-mouse=Controller()
-#clicks on a blank spot on webpage to clear the pop up mesages
-mouse.position=(254,140)
-for i in range(5):
-    mouse.press(Button.left)
-    mouse.release(Button.left)
-driver.find_element_by_id('27').click() #option for faculty feedback in list
+if driver.current_url != 'https://student.amizone.net/Home':
+    driver.close()
+    raise Exception('\033[91m'+'Login Failed! Please check your ID/Password!'+'\033[0m')
+else:
+    print('\033[94m'+'Login Successful!'+'\033[0m')
+
+# close pop-ups
+try:
+    time.sleep(2)
+    popups=driver.find_elements_by_class_name("close")
+    print(str(len(popups))+" Pop-ups found!")
+    for popup in popups:
+        try:
+            popup.click()
+        except:
+            print('\033[93m'+u'\u2717',end=" ")
+        else:
+            print('\033[92m'+u'\u2713',end=" ")
+except:
+    print('\033[94m'+"No Pop-ups found!"+'\033[0m')
+else:
+    print('\033[92m'+"\nAll Pop-ups closed!"+'\033[0m')
+
+#option for faculty feedback in list
+driver.find_element_by_id('27').click() 
 time.sleep(1)
 
 def fill(n=1):
@@ -78,3 +111,5 @@ def main(n=1):
 
 if __name__ =="__main__":
     main()
+    print('\033[92m'+'Feedback Successfully filled! PLease verify manually.'+'\033[0m')
+    print('\033[93m'+'[NOTE]:If some faculties are left, you can re-run the script'+'\033[0m')

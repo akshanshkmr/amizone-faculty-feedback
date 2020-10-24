@@ -6,13 +6,12 @@ By: Akshansh Kumar, AIIT
 Steps:
 
 1. Download or clone this repository
-2. Open the dist folder
-3. Run the "amizone.exe" file
-4. Enter your amizone id and password
+2. Run the "amizone.py" file, we recommend running it in terminal for better formatting
+3. Enter your amizone id and password
 5. Enter your feedback comments and rating
-6. Press enter to run the script
-7. Sit back, relax and watch it happen
+5. Press enter to run the script
+6. Sit back, relax and watch it happen
 
-The script will autmaticall login to your amizone account, clear all the pop up messages, navigate to the faculty fedback section and fill in the feedback according to the data provided by you
+The script will autmatically login to your amizone account, clear all the pop up messages, navigate to the faculty fedback section and fill in the feedback according to the data provided by you
 
-Thankyou
+Enjoy!
