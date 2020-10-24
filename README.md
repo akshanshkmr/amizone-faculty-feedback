@@ -4,7 +4,7 @@ This is a hassle free script to fill your amizone faculty feedback automatically
 By: Akshansh Kumar, AIIT
 
 Prerequesites:
-Install selenium: [pip install selenium]
+selenium webdriver must be installed ("pip install selenium")
 
 Steps:
 
