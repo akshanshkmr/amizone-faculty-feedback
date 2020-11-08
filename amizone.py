@@ -1,4 +1,4 @@
-import time
+from time import sleep
 from selenium import webdriver
 import os
 import sys, traceback
@@ -38,7 +38,7 @@ driver.find_element_by_name('_Password').send_keys(passw)
 driver.find_element_by_class_name('login100-form-btn').click()
 
 # verify login
-time.sleep(2)
+sleep(2)
 if driver.current_url != 'https://student.amizone.net/Home':
     driver.close()
     raise Exception('\033[91m'+'Login Failed! Please check your ID/Password!'+'\033[0m')
@@ -47,12 +47,12 @@ else:
 
 # close pop-ups
 try:
-    time.sleep(2)
+    sleep(2)
     popups=driver.find_elements_by_class_name("close")
     print(str(len(popups))+" Pop-ups found!")
-    for popup in popups:
+    for close_btn in popups:
         try:
-            popup.click()
+            close_btn.click()
         except:
             print('\033[93m'+u'\u2717',end=" ")
         else:
@@ -63,8 +63,13 @@ else:
     print('\033[92m'+"\nAll Pop-ups closed!"+'\033[0m')
 
 #option for faculty feedback in list
-driver.find_element_by_id('27').click() 
-time.sleep(1)
+try:
+    sleep(2)
+    driver.find_element_by_id('27').click() 
+    sleep(1)
+except:
+    print('\033[92m'+'No Faculty Feedback Exists for you!'+'\033[0m')
+    # driver.close()
 
 def fill(n=1):
     try:
@@ -90,23 +95,23 @@ def submit():
 def main(n=1):
     try:
         for i in range(n,20):
-            time.sleep(1)
+            sleep(1)
             #click on the faculty
             driver.find_element_by_xpath('/html/body/div[3]/div/div[2]/div/div/div[2]/div[2]/div/ul/li['+ str(i)+']').click()
             # click on the fill feedback button
-            time.sleep(1)
+            sleep(1)
             driver.find_element_by_xpath('/html/body/div[3]/div/div[2]/div/div/div[2]/div[2]/div/ul/li['+str(i)+']/div[3]/div[2]/div/div/div/div[2]/div/div/div[2]/a').click()
-            time.sleep(2)
+            sleep(2)
             driver.execute_script('window.scrollTo(0,0)')
-            time.sleep(2)
+            sleep(2)
             fill()
             comment()
             submit()
-            time.sleep(1)
+            sleep(1)
     except:
-        time.sleep(1)
+        sleep(1)
         driver.execute_script('window.scrollTo(0,0)')
-        time.sleep(1)
+        sleep(1)
         main(n+1)
 
 if __name__ =="__main__":
