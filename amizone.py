@@ -39,7 +39,7 @@ driver.find_element_by_class_name('login100-form-btn').click()
 
 # verify login
 sleep(2)
-if driver.current_url != 'https://student.amizone.net/Home':
+if driver.current_url != 'https://s.amizone.net/Home':
     driver.close()
     raise Exception('\033[91m'+'Login Failed! Please check your ID/Password!'+'\033[0m')
 else:
@@ -69,7 +69,6 @@ try:
     sleep(1)
 except:
     print('\033[92m'+'No Faculty Feedback Exists for you!'+'\033[0m')
-    # driver.close()
 
 def fill(n=1):
     try:
