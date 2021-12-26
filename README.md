@@ -4,6 +4,7 @@ This is a hassle free script to fill your amizone faculty feedback automatically
 By: Akshansh Kumar, AIIT
 
 **Prerequesites:**
+* Python 3.6 or above should be installed
 * Chrome browser should be installed
 
 **Steps:**
