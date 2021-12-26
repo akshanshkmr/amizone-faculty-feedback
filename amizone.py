@@ -1,8 +1,12 @@
+import os, sys
+
+# install requirements
+os.system('pip install -r ' + os.path.join('requirements.txt'))
+
 from time import sleep
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from rich.console import Console
-import sys
 
 console = Console()
 
