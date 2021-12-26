@@ -3,15 +3,21 @@ This is a hassle free script to fill your amizone faculty feedback automatically
 
 By: Akshansh Kumar, AIIT
 
-Prerequesites:
-selenium webdriver must be installed ("pip install selenium")
+**Prerequesites:**
+
+1. Chrome browser should be installed
+2. Install required packages:
+```
+pip install -r requirements.txt
+```
+
 
 Steps:
 
 1. Download or clone this repository
-2. Run the "amizone.py" file, we recommend running it in terminal for better formatting
+2. Run the "amizone.py" file
 3. Enter your amizone id and password
-5. Enter your feedback comments and rating
+4. Enter your feedback comments and rating
 5. Press enter to run the script
 6. Sit back, relax and watch it happen
 

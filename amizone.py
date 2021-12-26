@@ -1,34 +1,24 @@
 from time import sleep
 from selenium import webdriver
-import os
-import sys, traceback
+from webdriver_manager.chrome import ChromeDriverManager
+from rich.console import Console
+import sys
 
-print("Amizone feedback tool (2020), By: Akshansh Kumar, AIIT")
+console = Console()
+
+def pprint(*args, **kwargs):
+    console.print(*args, **kwargs)
+
+pprint("-------------------------------------------------------", style='b blue')
+pprint("Amizone feedback tool (2020), By: Akshansh Kumar, AIIT", style='b blue')
+pprint("-------------------------------------------------------", style='b blue')
+
 uid         = input("Enter your amizone id:")
 passw       = input("Enter your password:")
 comments    = input("Enter your comments:")
-rating      = int(input("Enter your rating(5=Strongly agree...1=Strongly disagree):"))
-#  5=Strongly Agree, 4=Agree, 3=Neutral, 2=Disagree, 1=Strongly Disagree
+rating      = int(input("Enter your rating(5=Strongly agree ... 1=Strongly disagree):"))
 
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.dirname(__file__)
-    return os.path.join(base_path, relative_path)
-
-# open browser and go to amizone
-try:
-    driver = webdriver.Edge(resource_path('./driver/msedgedriver.exe'))
-except Exception as e:
-    print('\033[91m'+'Browser/Webdriver Mismatch Found!'+'\033[0m')
-    print('\033[93m'+str(e).strip()+'\033[0m')
-    print('\033[96m'+'Please ensure you are running an updated version of Microsoft Edge (Chromium)'+'\033[0m')
-    print('Download here: '+'\033[92m'+'https://www.microsoft.com/en-us/edge'+'\033[0m')
-    print('\033[96m'+'Also ensure that you have the correct version of webdriver that matches your browser version'+'\033[0m')
-    print('Download here: '+'\033[92m'+'https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/'+'\033[0m')
-    print('\033[93m'+'Then, Replace the "msedgedriver.exe" file present in: '+'\033[92m'+os.path.dirname(__file__)+'/driver/'+'\033[0m')
-    sys.exit()
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.maximize_window()
 
 def visit_amizone():
@@ -43,27 +33,28 @@ def verify_login():
     sleep(2)
     if driver.current_url != 'https://s.amizone.net/Home':
         driver.close()
-        raise Exception('\033[91m'+'Login Failed! Please check your ID/Password!'+'\033[0m')
+        pprint("Login Failed! Please check your ID/Password!", style='b red')
+        sys.exit()
     else:
-        print('\033[94m'+'Login Successful!'+'\033[0m')
+        pprint('Login Successful!', style='b green')
 
 def close_popups():
     # close pop-ups
     try:
         sleep(2)
         popups=driver.find_elements_by_class_name("close")
-        print(str(len(popups))+" Pop-ups found!")
+        pprint(str(len(popups))+" Pop-ups found!", style='b yellow')
         for close_btn in popups:
             try:
                 close_btn.click()
             except:
-                print('\033[93m'+u'\u2717',end=" ")
+                pprint('✘', style='b red', end=' ')
             else:
-                print('\033[92m'+u'\u2713',end=" ")
+                pprint('✔', style='b green', end=' ')
     except:
-        print('\033[94m'+"No Pop-ups found!"+'\033[0m')
+        pprint("No Pop-ups found!", style='b green')
     else:
-        print('\033[92m'+"\nAll Pop-ups closed!"+'\033[0m')
+        pprint("All Pop-ups closed!", style='b green')
 
 def select_my_faculty():
     #option for faculty feedback in list
@@ -72,7 +63,7 @@ def select_my_faculty():
         driver.find_element_by_id('M27').click() 
         sleep(1)
     except:
-        print('\033[92m'+'No Faculty Feedback Exists for you!'+'\033[0m')
+        pprint('No Faculty Feedback Exists for you!', style='b green')
 
 def fill():
     driver.execute_script("var items = document.querySelectorAll('input[value=\""+str(rating)+"\"]');for (var i = 0; i < items.length; i++) {items[i].click();}")
@@ -108,6 +99,7 @@ def main():
     visit_amizone()
     verify_login()
     close_popups()
+    close_popups()
     select_my_faculty()
     try:
         fill_feedback()
@@ -115,8 +107,7 @@ def main():
         sleep(5)
         fill_feedback()
     
-
 if __name__ =="__main__":
     main()
-    print('\033[92m'+'Feedback Successfully filled! PLease verify manually.'+'\033[0m')
-    print('\033[93m'+'[NOTE]:If some faculties are left, you can re-run the script'+'\033[0m')
+    pprint('Feedback Successfully filled! PLease verify manually.', style='b green')
+    pprint('[NOTE]:If some faculties are left, you can re-run the script', style='b yellow')

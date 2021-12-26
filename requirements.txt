@@ -1,0 +1,3 @@
+rich
+selenium
+webdriver_manager
